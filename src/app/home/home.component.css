@@ -1,0 +1,19 @@
+.home {
+	padding-left: 300px;
+	position: relative;
+}
+
+@media only screen and (max-width : 992px) {
+	.home {
+		padding-left: 0;
+	}
+}
+
+.show-nav-button {
+	position: fixed;
+	width: 48px;
+	top: 18px;
+	left: 20px;
+	z-index: 9999;
+	color: white;
+}

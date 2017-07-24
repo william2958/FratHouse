@@ -1,0 +1,121 @@
+.modal-header {
+	text-align: center;
+	background-color: #263238;
+}
+
+.modal-body {
+	height: 250px;
+	overflow-y: scroll;
+}
+
+.modal-content {
+	border-radius: 0;
+}
+
+.logo {
+	width: 50px;
+	height: 50px;
+}
+
+img {
+	vertical-align: bottom;
+	cursor: pointer;
+}
+
+.cancelIcon {
+	vertical-align: middle;
+	fill: white;
+	float: right;
+}
+
+.title {
+	font-size: 32px;
+	color: white;
+	display: inline;
+}
+
+.login-modal {
+	width: 400px;
+	height: 460px;
+	margin-top: 100px;
+}
+
+.error-row {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.error-message {
+	color: red;
+}
+
+.modal-title {
+	width: 100%;
+}
+
+.login-form {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.signup-form {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.input-field {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.password-field {
+	margin-top: 25px;
+}
+
+.login-button {
+	margin-top: 15px;
+	background-color: #263238;
+}
+
+.google-button {
+	padding: 0;
+	width: 80%;
+	border: 0;
+}
+
+.google-button-image {
+	width: 50%;
+}
+
+.oauth-row {
+	text-align: center;
+	margin-top: 20px;
+}
+
+
+/* SIGN UP MODAL */
+.signup-modal {
+	width: 400px;
+	height: 520px;
+	margin-top: 100px;
+}
+
+.signup-input {
+	margin-bottom: 5px;
+}
+
+
+/* Forgot Password Modal */
+
+.forgot-modal {
+	width: 400px;
+	height: 350px;
+	margin-top: 20px;
+}
+
+.forgot-password-link {
+	color: red;
+	margin-right: 40px;
+	font-size: 12px;
+}

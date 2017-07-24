@@ -1,0 +1,35 @@
+<ul class="side-nav-list">
+	<li id="logo-container">
+		<a id="logo">
+			<img id="logo-image" src="assets/images/friday-square.svg">
+		</a>
+	</li>
+	<!--<li><a class="waves-effect" routerLinkActive="active-link" [routerLink]="['/', 'home', 'dashboard']"><i class="material-icons">dashboard</i>Dashboard</a></li>-->
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'dashboard']">
+		<i class="material-icons">dashboard</i>Dashboard</a>
+	</li>
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'expenses']">
+		<i class="material-icons">list</i>My Expenses</a>
+	</li>
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'transactions']">
+		<i class="material-icons">payment</i>Transactions</a>
+	</li>
+
+
+	<li><div class="divider"></div></li>
+	<li><a class="waves-effect subheader">My Houses</a></li>
+	<div *ngFor="let house of houses">
+		<li><a class="waves-effect" (click)="goToHouse(house)">
+			<i class="material-icons">home</i>{{house.name}}</a>
+		</li>
+	</div>
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'create-house']">
+		<i class="material-icons">add</i>New House</a>
+	</li>
+
+
+	<li><div class="divider"></div></li>
+	<li><a class="waves-effect subheader">Preferences</a></li>
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'user']">My Account</a></li>
+	<li><a class="waves-effect" (click)="logout()">Log Out</a></li>
+</ul>

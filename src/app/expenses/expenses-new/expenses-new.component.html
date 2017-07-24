@@ -1,0 +1,38 @@
+<div *ngIf="house">
+	<h2>Adding expense for {{house.name}}</h2>
+
+	<div *ngIf="members && user">
+		<h2>Please choose members to split this expense among.</h2>
+
+		<div class="member" *ngFor="let member of members" (click)="memberSelected(member)">
+			{{member.name}}
+		</div>
+
+		<div *ngIf="members.length == 0">
+			<h2>No members found for this house</h2>
+		</div>
+
+		<form (submit)="createExpense()" autocomplete="off" novalidate [formGroup]="newExpenseForm">
+			<div class="row">
+				<div class="input-field col s12">
+					<input formControlName="amount" id="amount" type="number">
+					<label for="amount" class="active">Amount</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<input formControlName="reason" id="reason" type="text">
+					<label for="reason" class="active">Reason</label>
+				</div>
+			</div>
+
+			<button class="btn waves-effect waves-light right" type="submit" name="action">Create Expense
+				<i class="material-icons right">send</i>
+			</button>
+
+		</form>
+
+	</div>
+
+</div>

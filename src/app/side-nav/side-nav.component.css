@@ -1,0 +1,32 @@
+#logo:hover {
+	background-color: transparent;
+}
+
+#logo-image {
+	height: 90px;
+}
+
+#logo-image {
+	cursor: pointer;
+}
+
+#logo-container {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;
+	/*background-color: #c3dfed;*/
+	margin-bottom: 10px;
+}
+
+#logo-container > a {
+	/* logo-image height */
+	height: 90px;
+}
+
+.active-link {
+	background-color: #eceff1;
+}
+
+a:visited {
+	text-decoration: none;
+}

@@ -1,0 +1,37 @@
+<div class="container createNoteSection">
+
+	<h3>Find Friends by Username: </h3>
+
+	<form (ngSubmit)="searchUsername()" autocomplete="off" novalidate [formGroup]="usernameSearchForm">
+		<div class="row">
+			<div class="input-field col s12">
+				<input formControlName="username" id="username" type="text">
+				<label for="username" class="active">Username</label>
+			</div>
+		</div>
+
+		<button class="btn waves-effect waves-light right" type="submit" name="action">Search
+			<i class="material-icons right">send</i>
+		</button>
+	</form>
+
+	<div *ngIf="searchResults" (click)="selectUser()">
+		{{searchResults.name}}, {{searchResults.username}}, {{searchResults.key}}
+	</div>
+
+	<div *ngIf="selectedUsers.length > 0">
+		<h2>Selected Housemates</h2>
+		<div *ngFor="let user of selectedUsers">
+			User: {{user.name}}
+		</div>
+	</div>
+
+</div>
+
+<a class="waves-effect waves-light btn" (click)="back()" style="margin: 40px;">
+	<i class="material-icons left">cloud</i>back
+</a>
+
+<a class="waves-effect waves-light btn right" (click)="createHouse()" style="margin: 40px;">
+	<i class="material-icons left">cloud</i>Create House
+</a>

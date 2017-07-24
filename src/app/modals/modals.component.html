@@ -1,0 +1,95 @@
+<!-- Log In Modal -->
+<div #loginModal materialize="modal" [materializeParams]="[{dismissible: true, inDuration: 200}]"
+	 [materializeActions]="loginModalActions" class="modal login-modal">
+	<div class="modal-header">
+		<h4 class="modal-title title">Log In</h4>
+		<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+	</div>
+	<div *ngIf="(loginErrors$ | async)?.length > 0" class="error-row">
+		<span class="error-message">{{loginErrors$ | async}}</span>
+	</div>
+
+	<form (ngSubmit)="login()" autocomplete="off" novalidate [formGroup]="loginForm" class="login-form">
+		<div class="input-field">
+			<input type="email" id="loginEmail" name="email" formControlName="email" class="validate">
+			<label for="loginEmail" data-error="Invalid email format.">Email</label>
+		</div>
+		<div class="input-field password-field">
+			<input type="password" class="validate" id="loginPassword" name="password" formControlName="password">
+			<label for="loginPassword" data-error="Password required.">Password:</label>
+		</div>
+		<div style="text-align: right">
+			<a (click)="forgotPassword()" class="forgot-password-link">Forgot Password?</a>
+		</div>
+
+		<button type="submit" class="btn btn-primary login-button">Login</button>
+	</form>
+	<div class="oauth-row">
+		<img (click)="loginWithGoogle()" class="google-button-image" src="assets/images/google-sign-in-button.png">
+	</div>
+
+</div>
+
+<!-- Sign Up Modal -->
+<div #signupModal materialize="modal" [materializeParams]="[{dismissible: true, inDuration: 200}]"
+	 [materializeActions]="signupModalActions" class="modal signup-modal">
+	<div class="modal-header">
+		<h4 class="modal-title title">Sign Up</h4>
+		<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+	</div>
+
+	<div *ngIf="(signupErrors$ | async)?.length > 0" class="error-row">
+		<span class="error-message">{{signupErrors$ | async}}</span>
+	</div>
+
+	<form (ngSubmit)="signup()" autocomplete="off" novalidate [formGroup]="signupForm" class="signup-form">
+
+		<div class="input-field">
+			<input class="signup-input" type="email" id="signupEmail" name="email" formControlName="email">
+			<label for="signupEmail">Email</label>
+		</div>
+		<div class="input-field">
+			<input class="signup-input" type="text" id="signupFirstName" name="first_name" formControlName="first_name">
+			<label for="signupFirstName">First Name</label>
+		</div>
+		<div class="input-field">
+			<input class="signup-input" type="text" id="signupLastName" name="last_name" formControlName="last_name">
+			<label for="signupLastName">Last Name</label>
+		</div>
+		<div class="input-field">
+			<input class="signup-input" type="password" id="signupPassword" name="password" formControlName="password">
+			<label for="signupPassword">Password:</label>
+		</div>
+		<div class="input-field">
+			<input class="signup-input" type="password" id="signupConfirmPassword" name="password" formControlName="confirm_password">
+			<label for="signupConfirmPassword">Confirm Password:</label>
+		</div>
+		<button type="submit" class="btn btn-primary login-button">Sign Up</button>
+	</form>
+</div>
+
+<!-- Reset Password Modal -->
+<div materialize="modal" [materializeParams]="[{dismissible: false, inDuration: 200}]"
+	 [materializeActions]="forgotModalActions" class="modal forgot-modal">
+	<div class="modal-header">
+		<h4 class="modal-title title">Enter Email</h4>
+		<img (click)="cancelPin()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+	</div>
+
+
+	<form autocomplete="off" novalidate (submit)="sendResetEmail(forgotInput.value)" class="pin-form">
+		<div class="input-field">
+			<input #forgotInput id="forgot" type="text" class="validate">
+			<label for="forgot">Email</label>
+		</div>
+		<div *ngIf="forgotError" class="pin-error">
+			{{forgotError}}
+		</div>
+		<div class="pin-button-row">
+			<button type="submit" class="btn btn-primary submit-pin-button">Enter</button>
+			<button (click)="close()" class="btn btn-primary cancel-pin-button">Cancel</button>
+		</div>
+	</form>
+
+</div>
+

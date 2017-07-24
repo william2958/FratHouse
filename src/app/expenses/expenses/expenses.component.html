@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-sm-8 outline">
+		<h4>Expenses I owe other people</h4>
+		<div *ngIf="owedExpenses$ | async as owedExpenses">
+			<div *ngFor="let expense of owedExpenses">
+				expense
+				{{expense.reason}}: {{expense.amount}}
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4 outline">
+		<h4>Expenses people owe me</h4>
+		<div *ngIf="outstandingExpenses$ | async as outstandingExpenses">
+			<div *ngFor="let expense of outstandingExpenses">
+				{{expense.reason}}: {{expense.amount}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="fixed-action-btn">
+	<a [routerLink]="['/', 'home', 'expenses', 'new']"
+	   class="btn-floating btn-large btn red"
+	   data-position="left" title="Add Note">
+		<i class="large material-icons">add</i>
+	</a>
+</div>

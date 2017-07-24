@@ -1,0 +1,11 @@
+<div class="container">
+
+	<div *ngIf="user$ | async as user">
+		<h2>My Account</h2>
+		<h3>
+			name: {{user.first_name}} {{user.last_name}}
+		</h3>
+		<p>username: {{user.username}}</p>
+	</div>
+
+</div>
