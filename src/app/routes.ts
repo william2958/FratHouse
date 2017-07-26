@@ -10,6 +10,8 @@ import {MyAccountComponent} from "./my-account/my-account.component";
 import {HouseDetailComponent} from "./house-detail/house-detail.component";
 import {ExpensesComponent} from "./expenses/expenses/expenses.component";
 import {ExpensesNewComponent} from "./expenses/expenses-new/expenses-new.component";
+import {ExpenseDetailComponent} from "./expenses/expense-detail/expense-detail.component";
+import {TransactionsComponent} from "./transactions/transactions/transactions.component";
 export const routes: Routes = [
 
 	{
@@ -47,9 +49,23 @@ export const routes: Routes = [
 						component: ExpensesNewComponent
 					},
 					{
+						path: ':expenseId',
+						component: ExpenseDetailComponent
+					},
+					{
 						path: '',
 						pathMatch: 'full',
 						component: ExpensesComponent
+					}
+				]
+			},
+			{
+				path: 'transactions',
+				children: [
+					{
+						path: '',
+						pathMatch: 'full',
+						component: TransactionsComponent
 					}
 				]
 			},

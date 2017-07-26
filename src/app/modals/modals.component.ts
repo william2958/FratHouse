@@ -97,7 +97,8 @@ export class ModalsComponent implements OnInit {
 				const firebaseUser = firebase.auth().currentUser;
 				if (firebaseUser) {
 					const verified = firebaseUser.emailVerified;
-					if (user && verified) {
+					// TODO: Uncomment this
+					if (user) { // && verified) {
 						this.loginModalActions.emit({action: 'modal', params: ['close']});
 						this.loginForm.reset();
 						this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Login Successful!']));

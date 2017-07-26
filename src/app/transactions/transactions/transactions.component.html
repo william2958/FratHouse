@@ -1,0 +1,15 @@
+<div *ngIf="transactions$ | async as transactions">
+	<div *ngFor="let transaction of transactions">
+		<h5>TransactionId: {{transaction.key}}</h5>
+		<p>Amount: {{transaction.amount}}</p>
+		<p>Reason: {{transaction.reason}}</p>
+		<p>Payer: {{transaction.payer}}</p>
+		<p>Payee: {{transaction.payee}}</p>
+		<p>Payee Name: {{transaction.payeeName}}</p>
+		<p>House: {{transaction.house}}</p>
+		<p>Expense: {{transaction.expense}}</p>
+		<p>Date Created: {{transaction.date_created | date}}</p>
+	</div>
+</div>
+
+<button (click)="showMoreTransactions()">Show More Transactions</button>

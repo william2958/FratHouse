@@ -40,12 +40,18 @@ import { ExpensesComponent } from './expenses/expenses/expenses.component';
 import {expenseData} from "./store/reducers/expenseDataReducer";
 import {ExpenseEffectService} from "./store/effects/expense-effect.service";
 import { ExpensesNewComponent } from './expenses/expenses-new/expenses-new.component';
+import { ExpenseDetailComponent } from './expenses/expense-detail/expense-detail.component';
+import {TransactionService} from "./services/transaction.service";
+import {transactionData} from "./store/reducers/transactionDataReducer";
+import {TransactionEffectService} from "./store/effects/transaction-effect.service";
+import { TransactionsComponent } from './transactions/transactions/transactions.component';
 
 export function storeReducer(state: ApplicationState, action: Action): ApplicationState {
 	return {
 		uiState: uiState(state.uiState, action),
 		houseData: houseData(state.houseData, action),
 		expenseData: expenseData(state.expenseData, action),
+		transactionData: transactionData(state.transactionData, action),
 		router: routerReducer(state.router, action)
 	};
 }
@@ -63,7 +69,9 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		MyAccountComponent,
 		HouseDetailComponent,
 		ExpensesComponent,
-		ExpensesNewComponent
+		ExpensesNewComponent,
+		ExpenseDetailComponent,
+		TransactionsComponent
 	],
 	imports: [
 		BrowserModule,
@@ -84,7 +92,8 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		EffectsModule.run(AuthEffectService),
 		EffectsModule.run(GlobalEffectService),
 		EffectsModule.run(HouseEffectService),
-		EffectsModule.run(ExpenseEffectService)
+		EffectsModule.run(ExpenseEffectService),
+		EffectsModule.run(TransactionEffectService)
 	],
 	providers: [
 		AuthGuard,
@@ -96,7 +105,9 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		ToastService,
 		ExpenseService,
 		HouseService,
-		ExpenseEffectService
+		ExpenseEffectService,
+		TransactionService,
+		TransactionEffectService
 	],
 	bootstrap: [AppComponent]
 })

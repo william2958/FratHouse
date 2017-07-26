@@ -4,6 +4,12 @@ export const LOAD_OUTSTANDING_EXPENSES_ACTION = 'LOAD_OUTSTANDING_EXPENSES_ACTIO
 export const OUTSTANDING_EXPENSES_LOADED_ACTION = 'OUTSTANDING_EXPENSES_LOADED_ACTION';
 export const LOAD_OWED_EXPENSES_ACTION = 'LOAD_OWED_EXPENSES_ACTION';
 export const OWED_EXPENSES_LOADED_ACTION = 'OWED_EXPENSES_LOADED_ACTION';
+export const LOAD_PAST_OUTSTANDING_EXPENSES_ACTION = 'LOAD_PAST_OUTSTANDING_EXPENSES_ACTION';
+export const PAST_OUTSTANDING_EXPENSES_LOADED_ACTION = 'PAST_OUTSTANDING_EXPENSES_LOADED_ACTION';
+export const LOAD_PAST_OWED_EXPENSES_ACTION = 'LOAD_PAST_OWED_EXPENSES_ACTION';
+export const PAST_OWED_EXPENSES_LOADED_ACTION = 'PAST_OWED_EXPENSES_LOADED_ACTION';
+export const LOAD_SINGLE_EXPENSE_ACTION = 'LOAD_SINGLE_EXPENSE_ACTION';
+export const SINGLE_EXPENSE_LOADED_ACTION = 'SINGLE_EXPENSE_LOADED_ACTION';
 export const CREATE_NEW_EXPENSE_ACTION = 'CREATE_NEW_EXPENSE_ACTION';
 
 export class LoadOutstandingExpensesAction implements Action {
@@ -20,6 +26,7 @@ export class OutstandingExpensesLoadedAction implements Action {
 
 export class LoadOwedExpensesAction implements Action {
 	type = LOAD_OWED_EXPENSES_ACTION;
+	// payload is user uid
 	constructor(public payload?: string) { }
 }
 
@@ -28,11 +35,48 @@ export class OwedExpensesLoadedAction implements Action {
 	constructor(public payload?: any) { }
 }
 
+export class LoadPastOutstandingExpensesAction implements Action {
+	type = LOAD_PAST_OUTSTANDING_EXPENSES_ACTION;
+	// payload is user uid
+	constructor(public payload?: string) { }
+}
+
+export class PastOutstandingExpensesLoadedAction implements Action {
+	type = PAST_OUTSTANDING_EXPENSES_LOADED_ACTION;
+	// payload is expense[]
+	constructor(public payload?: any) { }
+}
+
+export class LoadPastOwedExpensesAction implements Action {
+	type = LOAD_PAST_OWED_EXPENSES_ACTION;
+	// payload is user uid
+	constructor(public payload?: string) { }
+}
+
+export class PastOwedExpensesLoadedAction implements Action {
+	type = PAST_OWED_EXPENSES_LOADED_ACTION;
+	// payload is expense[]
+	constructor(public payload?: any) { }
+}
+
+export class LoadSingleExpenseAction implements Action {
+	type = LOAD_SINGLE_EXPENSE_ACTION;
+	// payload is expense key
+	constructor(public payload?: string) { }
+}
+
+export class SingleExpenseLoadedAction implements Action {
+	type = SINGLE_EXPENSE_LOADED_ACTION;
+	constructor(public payload?: any) { }
+}
+
 export class CreateExpensePayload {
 	userKey: string;
 	payers: BasicUser[];
 	reason: string;
 	amount: number;
+	houseKey: string;
+	payeeName: string;
 }
 export class CreateNewExpenseAction implements Action {
 	type = CREATE_NEW_EXPENSE_ACTION;

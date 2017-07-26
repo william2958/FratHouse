@@ -70,12 +70,12 @@ export class CreateHouseComponent implements OnInit {
 
 	}
 
-	createHouse() {
+	createHouse(houseName: string) {
 		if (this.user) {
-			console.log('CREATING HOUSE WITH: ', this.selectedUsers);
+			console.log('CREATING HOUSE WITH: ', this.selectedUsers, houseName);
 			const memberKeys = this.selectedUsers;
 			console.log('keys: ', memberKeys);
-			this.houseService.createHouse(this.user, memberKeys, 'house1');
+			this.houseService.createHouse(this.user, memberKeys, houseName);
 		}
 	}
 

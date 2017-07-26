@@ -2,17 +2,41 @@
 	<div class="col-sm-8 outline">
 		<h4>Expenses I owe other people</h4>
 		<div *ngIf="owedExpenses$ | async as owedExpenses">
-			<div *ngFor="let expense of owedExpenses">
-				expense
-				{{expense.reason}}: {{expense.amount}}
+			<div *ngFor="let expense of owedExpenses" (click)="goToExpense(expense.key)">
+				<p>{{expense.reason}}: {{expense.amount}}</p>
+				<p>{{expense.house}} {{expense.date_created | date}}</p>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-4 outline">
 		<h4>Expenses people owe me</h4>
 		<div *ngIf="outstandingExpenses$ | async as outstandingExpenses">
-			<div *ngFor="let expense of outstandingExpenses">
-				{{expense.reason}}: {{expense.amount}}
+			<div *ngFor="let expense of outstandingExpenses" (click)="goToExpense(expense.key)">
+				<p>{{expense.reason}}: {{expense.amount}}</p>
+				<p>{{expense.house}} {{expense.date_created | date}}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<button (click)="showOlderExpenses()">See Older Expenses</button>
+
+<div class="row">
+	<div class="col-sm-8 outline">
+		<h4>Past Expenses I owe other people</h4>
+		<div *ngIf="pastOwedExpenses$ | async as owedExpenses">
+			<div *ngFor="let expense of owedExpenses" (click)="goToExpense(expense.key)">
+				<p>{{expense.reason}}: {{expense.amount}}</p>
+				<p>{{expense.house}} {{expense.date_created | date}}</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4 outline">
+		<h4>Past Expenses people owe me</h4>
+		<div *ngIf="pastOutstandingExpenses$ | async as outstandingExpenses">
+			<div *ngFor="let expense of outstandingExpenses" (click)="goToExpense(expense.key)">
+				<p>{{expense.reason}}: {{expense.amount}}</p>
+				<p>{{expense.house}} {{expense.date_created | date}}</p>
 			</div>
 		</div>
 	</div>

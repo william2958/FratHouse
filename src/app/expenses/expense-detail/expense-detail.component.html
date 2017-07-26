@@ -1,0 +1,20 @@
+<div *ngIf="expense$ | async as expense">
+	<h2>Expense Detail</h2>
+	<p>Key: {{expense.key}}</p>
+	<p>Amount: {{expense.amount}}</p>
+	<p>house: {{expense.house}}</p>
+	<p>Payee: {{expense.payee}}</p>
+	<p>Payers: {{expense.payers | json}}</p>
+	<p>Transactions: {{expense.transactions | json}}</p>
+	<p>Reason: {{expense.reason}}</p>
+	<p>Date Created: {{expense.date_created | date}}</p>
+	<div *ngIf="user.uid != expense.payee; else myExpense">
+		<a class="waves-effect waves-light btn" (click)="payExpense(expense)">
+			<i class="material-icons left">cloud</i>Pay Expense
+		</a>
+	</div>
+	<ng-template #myExpense>
+		This expense is yours and thus you cannot pay it.
+	</ng-template>
+</div>
+

@@ -10,7 +10,10 @@ import {Store} from "@ngrx/store";
 import {ExpenseService} from "../../services/expense.service";
 import {
 	CREATE_NEW_EXPENSE_ACTION, LOAD_OUTSTANDING_EXPENSES_ACTION, LOAD_OWED_EXPENSES_ACTION,
-	OutstandingExpensesLoadedAction, OwedExpensesLoadedAction
+	LOAD_PAST_OUTSTANDING_EXPENSES_ACTION, LOAD_SINGLE_EXPENSE_ACTION,
+	OutstandingExpensesLoadedAction, OwedExpensesLoadedAction, PastOutstandingExpensesLoadedAction,
+	PastOwedExpensesLoadedAction,
+	SingleExpenseLoadedAction
 } from "../actions/expenseActions";
 
 @Injectable()
@@ -31,11 +34,28 @@ export class ExpenseEffectService {
 			).catch(
 				(err) => {
 					this.store.dispatch(new ShowToastAction([ERROR_TOAST, err.message]));
+					console.error(err);
 					return Observable.empty();
 				}
 			)
 		)
 		.map(expenses => new OutstandingExpensesLoadedAction(expenses));
+
+	@Effect() getSingleExpense$ = this.actions$
+		.ofType(LOAD_SINGLE_EXPENSE_ACTION)
+		.switchMap(action => Observable
+			.from(
+				// Payload is expense key
+				this.expenseService.getSingleExpense(action.payload)
+			).catch(
+				(err) => {
+					this.store.dispatch(new ShowToastAction([ERROR_TOAST, err.message]));
+					console.error(err);
+					return Observable.empty();
+				}
+			)
+		)
+		.map(expense => new SingleExpenseLoadedAction(expense));
 
 	@Effect() getOwedExpenses$ = this.actions$
 		.ofType(LOAD_OWED_EXPENSES_ACTION)
@@ -52,6 +72,36 @@ export class ExpenseEffectService {
 		)
 		.map(expenses => new OwedExpensesLoadedAction(expenses));
 
+	@Effect() getPastOutstandingExpenses$ = this.actions$
+		.ofType(LOAD_PAST_OUTSTANDING_EXPENSES_ACTION)
+		.switchMap(action => Observable
+			.from(
+				// Payload is user uid
+				this.expenseService.getPastOutstandingExpenses(action.payload)
+			).catch(
+				(err) => {
+					this.store.dispatch(new ShowToastAction([ERROR_TOAST, err.message]));
+					return Observable.empty();
+				}
+			)
+		)
+		.map(expenses => new PastOutstandingExpensesLoadedAction(expenses));
+
+	@Effect() getPastOwedExpenses$ = this.actions$
+		.ofType(LOAD_PAST_OUTSTANDING_EXPENSES_ACTION)
+		.switchMap(action => Observable
+			.from(
+				// Payload is user uid
+				this.expenseService.getPastOwedExpenses(action.payload)
+			).catch(
+				(err) => {
+					this.store.dispatch(new ShowToastAction([ERROR_TOAST, err.message]));
+					return Observable.empty();
+				}
+			)
+		)
+		.map(expenses => new PastOwedExpensesLoadedAction(expenses));
+
 	@Effect() createNewExpense$ = this.actions$
 		.ofType(CREATE_NEW_EXPENSE_ACTION)
 		.switchMap(action => Observable
@@ -60,8 +110,9 @@ export class ExpenseEffectService {
 				this.expenseService.createExpense({
 					amount: action.payload.amount,
 					payers: action.payload.payers,
-					reason: action.payload.reason
-				}, action.payload.userKey)
+					reason: action.payload.reason,
+					payeeName: action.payload.payeeName
+				}, action.payload.userKey, action.payload.houseKey)
 			).catch(
 				(err) => {
 					this.store.dispatch(new ErrorOccurredAction({

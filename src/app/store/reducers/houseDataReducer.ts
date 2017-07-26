@@ -20,7 +20,6 @@ export function houseData(state: HouseData, action: Action): HouseData {
 function handleHousesLoadedAction(state: HouseData, action: HousesLoadedAction): HouseData {
 	const newHouseData = _.cloneDeep(state);
 	newHouseData.houses = [];
-	console.log('writing new houses to the store: ', action.payload);
 	for (const house of action.payload) {
 		if (!(house.$value === null)) {
 			// Set the key value to the $key that's returned by firebase

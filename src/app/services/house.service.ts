@@ -4,6 +4,8 @@ import {Subject} from "rxjs/Subject";
 import {Observable} from "rxjs/Observable";
 import {House} from "../shared/models/house";
 import {BasicUser, User} from "../shared/models/user";
+import * as firebase from 'firebase';
+
 @Injectable()
 export class HouseService {
 
@@ -12,10 +14,8 @@ export class HouseService {
 	) { }
 
 	getHouses(userKey: string) {
-		console.log('getting houses in service...');
-		let houseKeys$ = undefined;
 
-		houseKeys$ = this.findHouseKeys(userKey);
+		const houseKeys$ = this.findHouseKeys(userKey);
 
 		// Once we have the house Keys we go find the houses associated to them.
 		return this.findHousesForHouseKeys(houseKeys$);
@@ -43,7 +43,8 @@ export class HouseService {
 		dataToSave['houses/' + newHouseKey] = {
 			admin: user.uid,
 			members: membersObject,
-			name: houseName
+			name: houseName,
+			date_created: firebase.database.ServerValue.TIMESTAMP
 		};
 
 		dataToSave['housesPerUser/' + user.uid + '/' + newHouseKey] = true;

@@ -7,8 +7,15 @@ import {Store} from "@ngrx/store";
 import {ExpenseService} from "../../services/expense.service";
 import * as _ from 'lodash';
 import {Expense} from "../../shared/models/expense";
-import {LoadOutstandingExpensesAction, LoadOwedExpensesAction} from "../../store/actions/expenseActions";
-import {outstandingExpensesSelector, owedExpensesSelector} from "../../store/selectors/expense-selectors";
+import {
+	LoadOutstandingExpensesAction, LoadOwedExpensesAction,
+	LoadPastOutstandingExpensesAction, LoadPastOwedExpensesAction
+} from "../../store/actions/expenseActions";
+import {
+	outstandingExpensesSelector, owedExpensesSelector,
+	pastOutstandingExpensesSelector, pastOwedExpensesSelector
+} from "../../store/selectors/expense-selectors";
+import {Router} from "@angular/router";
 
 @Component({
 	selector: 'app-expenses',
@@ -23,9 +30,12 @@ export class ExpensesComponent implements OnInit {
 
 	outstandingExpenses$: Observable<Expense[]>;
 	owedExpenses$: Observable<Expense[]>;
+	pastOutstandingExpenses$: Observable<Expense[]>;
+	pastOwedExpenses$: Observable<Expense[]>;
 
 	constructor(
-		private store: Store<ApplicationState>
+		private store: Store<ApplicationState>,
+	    private router: Router
 	) { }
 
 	ngOnInit() {
@@ -33,6 +43,8 @@ export class ExpensesComponent implements OnInit {
 		this.user$ = this.store.select(userSelector);
 		this.outstandingExpenses$ = this.store.select(outstandingExpensesSelector);
 		this.owedExpenses$ = this.store.select(owedExpensesSelector);
+		this.pastOutstandingExpenses$ = this.store.select(pastOutstandingExpensesSelector);
+		this.pastOwedExpenses$ = this.store.select(pastOwedExpensesSelector);
 
 		this.userSubscription$ = this.user$.subscribe(user => {
 			if (user) {
@@ -43,8 +55,17 @@ export class ExpensesComponent implements OnInit {
 			}
 		});
 
-		this.owedExpenses$.subscribe(expenses => console.log('expenses: ', expenses));
+	}
 
+	goToExpense(expenseKey: string) {
+		this.router.navigate(['/', 'home', 'expenses', expenseKey]);
+	}
+
+	showOlderExpenses() {
+		if (this.user) {
+			this.store.dispatch(new LoadPastOutstandingExpensesAction(this.user.uid));
+			this.store.dispatch(new LoadPastOwedExpensesAction(this.user.uid));
+		}
 	}
 
 }

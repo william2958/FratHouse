@@ -5,4 +5,14 @@ export interface Transaction {
 	payer: string;
 	amount: number;
 	reason: string;
+	expense: string;
+	house: string;
+}
+
+export interface CreateTransactionModel {
+	payee: string;
+	amount: number;
+	reason: string;
+	payeeName: string;
+	payerName: string;
 }

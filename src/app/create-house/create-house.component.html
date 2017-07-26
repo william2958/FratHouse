@@ -26,12 +26,19 @@
 		</div>
 	</div>
 
+	<h2>House Details: </h2>
+	<form autocomplete="off" novalidate (submit)="createHouse(houseNameInput.value)">
+		<div class="input-field">
+			<input type='text' #houseNameInput id="housename">
+			<label for="housename"></label>
+		</div>
+		<button class="btn waves-effect waves-light right" type="submit" name="action">Search
+			<i class="material-icons right">send</i>
+		</button>
+	</form>
+
 </div>
 
 <a class="waves-effect waves-light btn" (click)="back()" style="margin: 40px;">
 	<i class="material-icons left">cloud</i>back
-</a>
-
-<a class="waves-effect waves-light btn right" (click)="createHouse()" style="margin: 40px;">
-	<i class="material-icons left">cloud</i>Create House
 </a>

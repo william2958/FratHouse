@@ -22,6 +22,7 @@ export class ExpensesNewComponent implements OnInit {
 
 	houses$: Observable<any[]>;
 	house: House;
+	houses: House[];
 
 	members: BasicUser[] = [];
 
@@ -56,8 +57,7 @@ export class ExpensesNewComponent implements OnInit {
 				} else {
 					// TODO: FIX SO THAT IT DOESN'T AUTOMATICALLY CHOOSE THE FIRST HOUSE
 					console.log('multiple houses found. TODO ADD FUNCTIONALITY');
-					console.log('house found and set.', houses[1]);
-					this.initHouseAndMembers(houses[1]);
+					this.houses = houses;
 				}
 			}
 		});
@@ -69,19 +69,23 @@ export class ExpensesNewComponent implements OnInit {
 
 	}
 
+	selectHouse(house: House) {
+		this.initHouseAndMembers(house);
+	}
+
 	initHouseAndMembers(house: House) {
-		this.house = _.cloneDeep(house);
-		this.members = [];
-		for (const property in this.house.members) {
-			if (property !== this.user.uid) {
+		if (!this.house) {
+			this.house = _.cloneDeep(house);
+			this.members = [];
+			for (const property in this.house.members) {
 				this.members.push({
 					key: property,
 					name: (<any>this.house.members[property]).name,
 					username: (<any>this.house.members[property]).username
 				});
 			}
+			console.log('members found: ', this.members);
 		}
-		console.log('members found: ', this.members);
 	}
 
 	memberSelected(member) {
@@ -98,14 +102,19 @@ export class ExpensesNewComponent implements OnInit {
 			console.log('there are no members selected');
 		} else {
 			console.log('creating expense...');
-			if (this.user) {
+			if (this.user && this.house) {
 				console.log('creating expense...');
+				_.remove(this.selectedMembers, member => {
+					return member.key === this.user.uid;
+				});
 				this.store.dispatch(new ClearErrorAction(CREATE_EXPENSE_ERROR));
 				this.store.dispatch(new CreateNewExpenseAction({
 					reason: this.newExpenseForm.value.reason,
 					amount: this.newExpenseForm.value.amount,
 					payers: this.selectedMembers,
-					userKey: this.user.uid
+					userKey: this.user.uid,
+					houseKey: this.house.key,
+					payeeName: this.user.first_name + ' ' + this.user.last_name
 				}));
 			} else {
 				console.error('user key not found');
