@@ -1,0 +1,33 @@
+.expense-list {
+	height: 100vh;
+	border-left: 1px solid lightgrey;
+	background-color: white;
+}
+
+.scrollable-expense-list {
+	height: calc(100vh - 48px);
+	overflow: auto;
+}
+
+.tab-row {
+	box-shadow: 1px 1px 1px grey;
+	margin-bottom: 0;
+}
+
+.expense {
+	padding: 20px 20px 10px 20px;
+	border-bottom: 1px solid lightgrey;
+	cursor: pointer;
+}
+
+.tabs .tab a {
+	color: orange;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+	color: orange;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+	color: orange;
+}

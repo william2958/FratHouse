@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col s6">
+		<div *ngIf="owedExpenses.length > 0">
+			<h5>Owed Expenses</h5>
+			<div *ngFor="let expense of owedExpenses" class="card">
+				<div class="card-content">
+					<span class="card-title">{{expense.title}}</span>
+					<p>Owed Amount: {{expense.individualAmount}}</p>
+				</div>
+				<div class="card-action right-align">
+					<a [routerLink]="['/', 'home', 'expenses', expense.key]">See Expense</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col s6">
+		<div *ngIf="outstandingExpenses.length > 0">
+			<h5>Outstanding Expenses</h5>
+			<div *ngFor="let expense of outstandingExpenses" class="card">
+				<div class="card-content">
+					<span class="card-title">{{expense.title}}</span>
+					<p>Owed Amount: {{expense.individualAmount}}</p>
+					<p>Payers remaining: {{remainingPayers(expense)}}</p>
+				</div>
+				<div class="card-action right-align">
+					<a [routerLink]="['/', 'home', 'expenses', expense.key]">See Expense</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="outstandingExpenses.length === 0 && owedExpenses.length === 0" class="col s12">
+		<h5>There are no expenses available for this house!</h5>
+		<a [routerLink]="['/', 'home', 'expenses', 'new']">Create one now</a>
+	</div>
+</div>

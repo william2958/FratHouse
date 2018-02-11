@@ -8,6 +8,10 @@ import {ApplicationState} from "../store/application-state";
 import {GetFirebaseUserAction} from "../store/actions/authActions";
 import {Router} from "@angular/router";
 import * as firebase from 'firebase/app';
+import {
+	ERROR_TOAST, ErrorOccurredAction, SET_USERNAME_ERROR, ShowToastAction,
+	SUCCESS_TOAST
+} from "../store/actions/globalActions";
 
 @Injectable()
 export class AuthService {
@@ -84,7 +88,6 @@ export class AuthService {
 	setUsername(userKey: string, username: string, name: string) {
 		this.db.database.ref('usernames').child(username).once('value', snapshot => {
 			if (snapshot.val() == null) {
-				console.log('Username does not currently exist, creating now...');
 				const dataToSave = {};
 				dataToSave['usernames/' + username] = {
 					userKey: userKey,
@@ -92,10 +95,15 @@ export class AuthService {
 				};
 				dataToSave['users/' + userKey + '/username'] = username;
 				this.firebaseUpdate(dataToSave);
+				this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Username Set!']));
 			} else {
-				console.error('Username already exists!');
+				this.store.dispatch(new ErrorOccurredAction({
+					type: SET_USERNAME_ERROR,
+					message: 'Username has been taken!'
+				}));
 			}
 		});
+		return Observable.empty();
 	}
 
 	firebaseUpdate(dataToSave) {

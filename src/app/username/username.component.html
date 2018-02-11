@@ -1,0 +1,23 @@
+<div class="container username">
+
+	<h2>Set Username</h2>
+
+	<div>
+		<p>Your username lets other users find you to add you to expenses or houses.</p>
+		<p>Pick carefully! You cannot change your username once you've set it.</p>
+	</div>
+
+	<form autocomplete="off" novalidate (submit)="setUsername(usernameInput.value)">
+		<div class="input-field">
+			<input #usernameInput id="username" type="text" class="validate">
+			<label for="username">Username</label>
+		</div>
+		<div *ngIf="(usernameErrors$ | async)?.length > 0" class="left">
+			<span class="error-message">{{usernameErrors$ | async}}</span>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary right">Set Username</button>
+		</div>
+	</form>
+
+</div>

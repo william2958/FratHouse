@@ -1,0 +1,86 @@
+.delete-group-button {
+	margin-top: 18px;
+}
+
+.warning-zone {
+	border: 1px solid red;
+	border-radius: 5px;
+	padding: 15px;
+	clear: both;
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+
+.control-panel-row {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+#selectLink {
+	color: green;
+}
+
+.username-search-form {
+	margin-top: 10px;
+}
+
+.error-message {
+	color: red;
+}
+
+
+/* Confirm Delete Modal Styles */
+
+.modal-header {
+	text-align: center;
+}
+
+.content {
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-top: 45px;
+	font-size: 1.1em;
+	text-align: center;
+}
+
+img {
+	vertical-align: bottom;
+	cursor: pointer;
+}
+
+.title {
+	font-size: 32px;
+	color: white;
+	display: inline;
+}
+
+.cancelIcon {
+	vertical-align: middle;
+	fill: white;
+	float: right;
+}
+
+.forgot-modal {
+	width: 400px;
+	height: 350px;
+	margin-top: 20px;
+}
+
+.forgot-password-link {
+	color: red;
+	margin-right: 40px;
+	font-size: 12px;
+}
+
+.submit-pin-button {
+	background-color: #263238;
+}
+
+.cancel-pin-button {
+	background-color: #263238;
+}
+
+.pin-button-row {
+	text-align: center;
+	margin-top: 40px;
+}

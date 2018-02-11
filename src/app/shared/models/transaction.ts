@@ -3,6 +3,8 @@ export interface Transaction {
 	date_created: number;
 	payee: string;
 	payer: string;
+	payeeName: string;
+	payerName: string;
 	amount: number;
 	reason: string;
 	expense: string;

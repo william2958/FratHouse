@@ -1,4 +1,5 @@
 import {Expense} from "../shared/models/expense";
+import {Transaction} from "../shared/models/transaction";
 
 export interface ExpenseData {
 
@@ -7,6 +8,8 @@ export interface ExpenseData {
 	pastOutstandingExpenses: Expense[];
 	pastOwedExpenses: Expense[];
 	currentExpense: Expense;
+	currentHouseOwedExpenses: Expense[];
+	currentHouseOutstandingExpenses: Expense[];
 
 }
 
@@ -16,6 +19,8 @@ export const INITIAL_EXPENSE_DATA: ExpenseData = {
 	owedExpenses: [],
 	pastOutstandingExpenses: [],
 	pastOwedExpenses: [],
-	currentExpense: undefined
+	currentExpense: undefined,
+	currentHouseOwedExpenses: [],
+	currentHouseOutstandingExpenses: []
 
 };

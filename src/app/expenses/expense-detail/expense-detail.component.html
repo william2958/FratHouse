@@ -1,20 +1,85 @@
-<div *ngIf="expense$ | async as expense">
-	<h2>Expense Detail</h2>
-	<p>Key: {{expense.key}}</p>
-	<p>Amount: {{expense.amount}}</p>
-	<p>house: {{expense.house}}</p>
-	<p>Payee: {{expense.payee}}</p>
-	<p>Payers: {{expense.payers | json}}</p>
-	<p>Transactions: {{expense.transactions | json}}</p>
-	<p>Reason: {{expense.reason}}</p>
-	<p>Date Created: {{expense.date_created | date}}</p>
-	<div *ngIf="user.uid != expense.payee; else myExpense">
-		<a class="waves-effect waves-light btn" (click)="payExpense(expense)">
-			<i class="material-icons left">cloud</i>Pay Expense
-		</a>
+<div *ngIf="expense" class="expense-detail">
+
+	<div class="container">
+
+		<!--Title of the Expense-->
+		<h2 class="expense-title">{{expense.title || 'Misc. Expense'}}</h2>
+
+		<!--If the current user is NOT the creator of the expense-->
+		<div *ngIf="user.uid != expense.payee; else myExpense">
+
+			<div class="row">
+
+				<h5 class="expense-owner">Expense creator: {{expense.payeeName}}</h5>
+
+				<div class="col s6">
+					<div>Total Amount: {{expense.amount | currency: 'USD':true}}</div>
+					<div>You owe: {{expense.individualAmount | currency: 'USD':true}}</div>
+					<div>House: <a [routerLink]="['/', 'home', 'house-detail', expense.house]">{{houseName}}</a></div>
+				</div>
+				<div class="col s6">
+					<div>Reason: {{expense.reason}}</div>
+					<div>Date Created: {{expense.date_created | date}}</div>
+				</div>
+
+			</div>
+
+			<!--Pay transaction form only shows up if the user has not already paid-->
+			<div *ngIf="!alreadyPaid(expense)" class="row">
+				<div class="input-field center-align">
+					<input #paymentReasonInput id='reason' type="text" class="validate">
+					<label for="reason">Payment Type</label>
+				</div>
+				<a class="waves-effect waves-light btn right" (click)="payExpense(paymentReasonInput.value)">
+					<i class="material-icons left">credit_card</i>Pay Expense
+				</a>
+			</div>
+
+		</div>
+
+		<!--If the current user is the creator of the expense-->
+		<ng-template #myExpense>
+			<div class="row myExpense">
+				<div class="col s6">
+					<div>Total Amount: {{expense.amount | currency: 'USD':true}}</div>
+					<div>Individual amount: {{expense.individualAmount | currency: 'USD':true}}</div>
+					<div>House: <a [routerLink]="['/', 'home', 'house-detail', expense.house]">{{houseName}}</a></div>
+				</div>
+				<div class="col s6">
+					<p>Reason: {{expense.reason}}</p>
+					<p>Date Created: {{expense.date_created | date}}</p>
+				</div>
+			</div>
+		</ng-template>
+
+		<div *ngIf="payers.length > 0">
+			<h5 class="center-align">Payers</h5>
+			<ul class="collection">
+				<li class="collection-item" *ngFor="let payer of payers">
+					<span materialize="tooltip" class="tooltipped badge" data-position="right" data-delay="50" data-tooltip="Paid" *ngIf="payer.paid">{{payer.paid | date: 'MMM dd, j, y'}}</span>
+					<span *ngIf="!payer.paid" class="badge red">unpaid</span>
+					{{payer.name}}
+					<span class="username">[{{payer.username}}]</span>
+				</li>
+			</ul>
+		</div>
+
+		<div *ngIf="expense.transactions && (currentExpenseTransactions$ | async).length == 0" class="center-align">
+			<a class="waves-effect waves-light btn" (click)="getTransactions()">
+				<i class="material-icons left">list</i>See Transactions
+			</a>
+		</div>
+
+		<div *ngIf="(currentExpenseTransactions$ | async).length > 0 && user">
+			<h5 class="center-align">Transactions</h5>
+			<transaction-list
+				[transactions]="currentExpenseTransactions$ | async"
+				[user]="user"
+				[insideExpense]="true"
+			></transaction-list>
+		</div>
+
 	</div>
-	<ng-template #myExpense>
-		This expense is yours and thus you cannot pay it.
-	</ng-template>
+
 </div>
 

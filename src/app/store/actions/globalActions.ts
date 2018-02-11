@@ -3,6 +3,7 @@ import {Action} from "@ngrx/store";
 export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const CREATE_EXPENSE_ERROR = 'CREATE_EXPENSE_ERROR';
+export const SET_USERNAME_ERROR = 'SET_USERNAME_ERROR';
 
 export const SUCCESS_TOAST = 'SUCCESS_TOAST';
 export const WARNING_TOAST = 'WARNING_TOAST';

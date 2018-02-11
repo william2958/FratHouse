@@ -1,6 +1,9 @@
 import {TransactionData} from "../transaction-data";
 import {Action} from "@ngrx/store";
-import {TRANSACTIONS_LOADED_ACTION, TransactionsLoadedAction} from "../actions/transactionActions";
+import {
+	CURRENT_EXPENSE_TRANSACTIONS_LOADED_ACTION, CurrentExpenseTransactionsLoadedAction, TRANSACTIONS_LOADED_ACTION,
+	TransactionsLoadedAction
+} from "../actions/transactionActions";
 import * as _ from 'lodash';
 
 export function transactionData(state: TransactionData, action: Action): TransactionData {
@@ -9,6 +12,9 @@ export function transactionData(state: TransactionData, action: Action): Transac
 
 		case TRANSACTIONS_LOADED_ACTION:
 			return handleTransactionsLoadedAction(state, action);
+
+		case CURRENT_EXPENSE_TRANSACTIONS_LOADED_ACTION:
+			return handleCurrentExpenseTransactionsLoadedAction(state, action);
 
 		default:
 			return state;
@@ -56,4 +62,14 @@ function handleTransactionsLoadedAction(state: TransactionData, action: Transact
 
 
 	return newTransactionData;
+}
+
+
+function handleCurrentExpenseTransactionsLoadedAction(state: TransactionData, action: CurrentExpenseTransactionsLoadedAction): TransactionData {
+	const newTransactionData = _.cloneDeep(state);
+
+	newTransactionData.currentExpenseTransactions = _.cloneDeep(action.payload);
+
+	return newTransactionData;
+
 }

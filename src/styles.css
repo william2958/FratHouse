@@ -29,3 +29,9 @@ a:hover {
 body {
 	background-color: #fafafa;
 }
+
+/* MATERIALIZE OVERRIDE STYLES */
+
+.tabs .indicator {
+	background-color: orange;
+}

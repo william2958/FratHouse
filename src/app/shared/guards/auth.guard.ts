@@ -20,12 +20,9 @@ export class AuthGuard implements CanActivate {
 		// Get the auth state, if the user is logged in or not
 		return this.auth.authState.map((auth) => {
 			if (auth) {
-				if (true) { //auth.emailVerified) {
-				// If they are, then let them pass and retrieve
-				// the firebase user object to update the store
+				// if (auth.emailVerified) {
 					this.store.dispatch(new GetFirebaseUserAction(auth.uid));
 					return true;
-				}
 				// } else {
 				// 	this.store.dispatch(new ShowToastAction([ERROR_TOAST, 'Email not confirmed!']));
 				// 	this.router.navigate(['/']);

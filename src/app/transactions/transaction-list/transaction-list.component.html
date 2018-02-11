@@ -1,0 +1,49 @@
+<ul materialize='collapsible' class="collapsible popout" data-collapsible="accordion" *ngIf="transactions && user">
+	<li *ngFor="let transaction of transactions">
+		<div class="collapsible-header">
+			<div class="row">
+				<div class="col-xs-6">
+					<div *ngIf="transaction.payee === user.uid">
+						<i class="material-icons transaction_received">arrow_downward</i>
+					</div>
+					<div *ngIf="transaction.payer === user.uid">
+						<i class="material-icons transaction_paid">arrow_upward</i>
+					</div>
+					{{transaction.date_created | date: 'MMM dd, j, y'}}
+				</div>
+				<div class="col-xs-6 right-align">
+						<span [ngClass]="{'transaction_received_amount': transaction.payee === user.uid, 'transaction_paid_amount': transaction.payer === user.uid}">
+							{{transaction.amount | currency: 'USD':true:'2.2'}}
+						</span>
+				</div>
+			</div>
+		</div>
+		<div class="collapsible-body">
+			<div *ngIf="!insideExpense" class="row">
+				<div class="col-xs-6">
+					<div>Payee: {{transaction.payeeName}}</div>
+					<div>Payer: {{transaction.payerName}}</div>
+				</div>
+				<div class="col-xs-6 see_related">
+					<a class="related_link" (click)="seeRelatedExpense(transaction.expense)">See Related Expense</a>
+					<a class="related_link" (click)="seeRelatedHouse(transaction.house)">See House</a>
+				</div>
+			</div>
+			<div *ngIf="insideExpense" class="row">
+				<div class="col-xs-6 center-align">
+					<div>Payee: {{transaction.payeeName}}</div>
+				</div>
+				<div class="col-xs-6 center-align">
+					<div>Payer: {{transaction.payerName}}</div>
+				</div>
+			</div>
+			<div class="reason-row row center-align">
+				<div>Reason: {{transaction.reason}}</div>
+			</div>
+		</div>
+	</li>
+</ul>
+
+<div *ngIf="!insideExpense && transactions.length > 0" class="center-align see-older-button">
+	<a (click)="showMoreTransactions()">See Older</a>
+</div>

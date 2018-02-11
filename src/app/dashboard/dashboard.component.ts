@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
 import {Store} from "@ngrx/store";
@@ -15,11 +15,7 @@ import {userSelector} from "../store/selectors/user-selector";
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
-
-	userKey$: Observable<string>;
-	userKey: string;
-	userKeySubscription$: Subscription;
+export class DashboardComponent implements OnInit, OnDestroy {
 
 	user$: Observable<any>;
 	user: any;
@@ -27,26 +23,19 @@ export class DashboardComponent implements OnInit {
 
 	constructor(
 		private store: Store<ApplicationState>,
-		private expenseService: ExpenseService,
 		private houseService: HouseService,
-		private authService: AuthService,
 		private router: Router
 	) { }
 
 	ngOnInit() {
-		this.userKey$ = this.store.select(userKeySelector);
-		this.userKeySubscription$ = this.userKey$.subscribe(key => {
-			this.userKey = key;
-		});
 
 		this.user$ = this.store.select(userSelector);
 		this.userSubscription$ = this.user$.subscribe(user => {
 			this.user = user;
+			if (this.user && !this.user.username) {
+				this.router.navigate(['/', 'home', 'username']);
+			}
 		});
-	}
-
-	createHouse() {
-		this.router.navigate(['/', 'home', 'create-house']);
 	}
 
 	searchUsernames(query = 'billbrick') {
@@ -56,13 +45,8 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
-	setUsername(username: string) {
-		if (this.user) {
-			console.log('setting Username...');
-			this.authService.setUsername(this.user.uid, username, this.user.first_name + ' ' + this.user.last_name);
-		} else {
-			console.error('user not found');
-		}
+	ngOnDestroy() {
+		this.userSubscription$.unsubscribe();
 	}
 
 }

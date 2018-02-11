@@ -12,6 +12,7 @@ export const SIGN_OUT_ACTION = 'SIGN_OUT_ACTION';
 export const SIGNED_OUT_ACTION = 'SIGNED_OUT_ACTION';
 export const SHOW_LOGIN_MODAL_ACTION = 'SHOW_LOGIN_MODAL_ACTION';
 export const SHOW_SIGNUP_MODAL_ACTION = 'SHOW_SIGNUP_MODAL_ACTION';
+export const SET_USERNAME_ACTION = 'SET_USERNAME_ACTION';
 
 export class UpdateUserAction implements Action {
 	type = UPDATE_USER_ACTION;
@@ -73,4 +74,14 @@ export class ShowLoginModalAction implements Action {
 
 export class ShowSignupModalAction implements Action {
 	type = SHOW_SIGNUP_MODAL_ACTION;
+}
+
+export interface SetUsernamePayload {
+	username: string;
+	userKey: string;
+	fullname: string;
+}
+export class SetUsernameAction implements Action {
+	type = SET_USERNAME_ACTION;
+	constructor(public payload?: SetUsernamePayload) { }
 }

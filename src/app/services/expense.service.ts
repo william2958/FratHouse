@@ -38,6 +38,24 @@ export class ExpenseService {
 		return this.findExpensesForExpenseKeys(expenseKeys$);
 	}
 
+	getCurrentHouseOwedExpenses(userKey: string, houseKey: string) {
+		const expenseKeys$ = this.db.list('owedExpensesPerUser/' + userKey + '/' + houseKey)
+			.map(expensePerUser => {
+				return expensePerUser.map(expenseKey => expenseKey.$key);
+			});
+
+		return this.findExpensesForExpenseKeys(expenseKeys$);
+	}
+
+	getCurrentHouseOutstandingExpenses(userKey: string, houseKey: string) {
+		const expenseKeys$ = this.db.list('outstandingExpensesPerUser/' + userKey + '/' + houseKey)
+			.map(expensePerUser => {
+				return expensePerUser.map(expenseKey => expenseKey.$key);
+			});
+
+		return this.findExpensesForExpenseKeys(expenseKeys$);
+	}
+
 	getSingleExpense(expenseKey: string) {
 		return this.db.object('expenses/' + expenseKey).first();
 	}
@@ -60,9 +78,11 @@ export class ExpenseService {
 
 		dataToSave['expenses/' + newExpenseKey] = {
 			amount: expensesToSave.amount,
+			individualAmount: expensesToSave.individualAmount,
 			payee: userKey,
 			payeeName: expensesToSave.payeeName,
 			payers: payersOutstanding,
+			title: expensesToSave.title,
 			reason: expensesToSave.reason,
 			date_created: firebase.database.ServerValue.TIMESTAMP,
 			house: houseKey

@@ -1,0 +1,33 @@
+<div *ngIf="house; else houseNotFound" class="row houses">
+	<div class="col-xs-8 col-lg-9 no-padding house-detail">
+		<div class="container">
+			<h3>{{house.name}}</h3>
+
+			<p>Created on: {{house.date_created | date: 'MMM dd, j, y'}}</p>
+
+			<house-expenses
+				[owedExpenses]="currentHouseOwedExpenses$ | async"
+				[outstandingExpenses]="currentHouseOutstandingExpenses$ | async"
+				[user]="user$ | async"
+			></house-expenses>
+
+			<house-admin-panel
+				[user]="user$ | async"
+				[house]="house"
+			></house-admin-panel>
+		</div>
+	</div>
+	<div class="col-xs-4 col-lg-3 no-padding">
+		<member-list
+			[members]="members"
+			[house]="house"
+			[user]="user$ | async"
+			[owedExpenses]="currentHouseOwedExpenses$ | async"
+			[outstandingExpenses]="currentHouseOutstandingExpenses$ | async"
+		></member-list>
+	</div>
+</div>
+
+<ng-template #houseNotFound>
+	This house could not be found
+</ng-template>

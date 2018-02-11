@@ -1,0 +1,15 @@
+.member-list {
+	height: 100vh;
+	border-left: 1px solid lightgrey;
+	background-color: white;
+	overflow: auto;
+}
+
+.collection {
+	border: 0;
+	border-bottom: 1px solid lightgrey;
+}
+
+.collection .collection-item.avatar {
+	min-height: 0;
+}

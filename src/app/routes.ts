@@ -4,14 +4,15 @@ import {LoggedOutGuard} from "./shared/guards/logged-out.guard";
 import {HomeComponent} from "./home/home.component";
 import {AuthGuard} from "./shared/guards/auth.guard";
 import {Error404Component} from "./error404/error404.component";
-import {CreateHouseComponent} from "./create-house/create-house.component";
+import {CreateHouseComponent} from "./houses/create-house/create-house.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {MyAccountComponent} from "./my-account/my-account.component";
-import {HouseDetailComponent} from "./house-detail/house-detail.component";
+import {HouseDetailComponent} from "./houses/house-detail/house-detail.component";
 import {ExpensesComponent} from "./expenses/expenses/expenses.component";
 import {ExpensesNewComponent} from "./expenses/expenses-new/expenses-new.component";
 import {ExpenseDetailComponent} from "./expenses/expense-detail/expense-detail.component";
 import {TransactionsComponent} from "./transactions/transactions/transactions.component";
+import {UsernameComponent} from "./username/username.component";
 export const routes: Routes = [
 
 	{
@@ -38,6 +39,10 @@ export const routes: Routes = [
 				component: MyAccountComponent
 			},
 			{
+				path: 'username',
+				component: UsernameComponent
+			},
+			{
 				path: 'house-detail/:houseId',
 				component: HouseDetailComponent
 			},
@@ -50,7 +55,7 @@ export const routes: Routes = [
 					},
 					{
 						path: ':expenseId',
-						component: ExpenseDetailComponent
+						component: ExpensesComponent
 					},
 					{
 						path: '',

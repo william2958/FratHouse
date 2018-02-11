@@ -1,0 +1,19 @@
+<div class="member-list">
+	<h5 class="center-align">Members</h5>
+	<ul class="collection">
+		<li *ngFor="let member of members" class="collection-item avatar">
+			<img src="assets/images/profile_placeholder.png" alt="" class="circle">
+			<span class="title">{{member.name}}</span>
+			<div>{{member.username}}</div>
+			<div *ngIf="member.key === house.admin">Admin</div>
+			<div *ngIf="member.key !== user.uid" class="right-align">
+				<span *ngIf="getOwedValueForMember(member.key)">Owe: {{getOwedValueForMember(member.key)}}</span>
+				<span *ngIf="getOutstandingValueForMember(member.key)">Outstanding: {{getOutstandingValueForMember(member.key)}}</span>
+			</div>
+			<a (click)="removeMember(member)" *ngIf="user?.uid === house.admin && member.key !== house.admin" class="secondary-content tooltipped"
+			   materialize="tooltip" data-position="left" data-delay="50" data-tooltip="Remove Member">
+				<i class="material-icons red-text">remove_circle_outline</i>
+			</a>
+		</li>
+	</ul>
+</div>

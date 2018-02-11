@@ -1,0 +1,40 @@
+.transaction_received_amount {
+	color: green;
+}
+
+.transaction_paid_amount {
+	color: red;
+}
+
+.transaction_received {
+	color: green;
+}
+
+.transaction_paid {
+	color: red;
+}
+
+.see_related {
+	text-align: right;
+}
+
+.related_link {
+	display: block;
+}
+
+.related_link:hover {
+	text-decoration: none;
+}
+
+.row {
+	margin-bottom: 0;
+}
+
+.reason-row {
+	margin-top: 15px;
+}
+
+.see-older-button {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}

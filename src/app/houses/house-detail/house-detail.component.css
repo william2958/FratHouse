@@ -1,0 +1,9 @@
+.houses {
+	margin-bottom: 0;
+}
+
+.house-detail {
+	height: 100vh;
+	overflow: auto;
+}
+

@@ -29,13 +29,13 @@ import { HomeComponent } from './home/home.component';
 import { Error404Component } from './error404/error404.component';
 import {ExpenseService} from "./services/expense.service";
 import {HouseService} from "./services/house.service";
-import { CreateHouseComponent } from './create-house/create-house.component';
+import { CreateHouseComponent } from './houses/create-house/create-house.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import {houseData} from "./store/reducers/houseDataReducer";
 import {HouseEffectService} from "./store/effects/house-effect.service";
 import { MyAccountComponent } from './my-account/my-account.component';
-import { HouseDetailComponent } from './house-detail/house-detail.component';
+import { HouseDetailComponent } from './houses/house-detail/house-detail.component';
 import { ExpensesComponent } from './expenses/expenses/expenses.component';
 import {expenseData} from "./store/reducers/expenseDataReducer";
 import {ExpenseEffectService} from "./store/effects/expense-effect.service";
@@ -45,6 +45,12 @@ import {TransactionService} from "./services/transaction.service";
 import {transactionData} from "./store/reducers/transactionDataReducer";
 import {TransactionEffectService} from "./store/effects/transaction-effect.service";
 import { TransactionsComponent } from './transactions/transactions/transactions.component';
+import { ExpenseListComponent } from './expenses/expense-list/expense-list.component';
+import { TransactionListComponent } from './transactions/transaction-list/transaction-list.component';
+import { UsernameComponent } from './username/username.component';
+import { MemberListComponent } from './houses/member-list/member-list.component';
+import { HouseAdminPanelComponent } from './houses/house-admin-panel/house-admin-panel.component';
+import { HouseExpensesComponent } from './houses/house-expenses/house-expenses.component';
 
 export function storeReducer(state: ApplicationState, action: Action): ApplicationState {
 	return {
@@ -71,7 +77,13 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		ExpensesComponent,
 		ExpensesNewComponent,
 		ExpenseDetailComponent,
-		TransactionsComponent
+		TransactionsComponent,
+		ExpenseListComponent,
+		TransactionListComponent,
+		UsernameComponent,
+		MemberListComponent,
+		HouseAdminPanelComponent,
+		HouseExpensesComponent
 	],
 	imports: [
 		BrowserModule,

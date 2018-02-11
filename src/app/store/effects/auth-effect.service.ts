@@ -7,10 +7,10 @@ import {
 	GET_FIREBASE_USER_ACTION, GetFirebaseGoogleUserAction,
 	GetFirebaseUserAction,
 	SIGN_IN_EMAIL_ACTION, SIGN_IN_GOOGLE_ACTION, SIGN_OUT_ACTION, SignedOutAction, SIGNUP_ACTION,
-	UserSignedInAction, GET_FIREBASE_GOOGLE_USER_ACTION, USER_SIGNED_IN_ACTION
+	UserSignedInAction, GET_FIREBASE_GOOGLE_USER_ACTION, USER_SIGNED_IN_ACTION, SET_USERNAME_ACTION
 } from "../actions/authActions";
 import {ApplicationState} from "../application-state";
-import {ErrorOccurredAction, LOGIN_ERROR, SIGNUP_ERROR} from "../actions/globalActions";
+import {ERROR_TOAST, ErrorOccurredAction, LOGIN_ERROR, ShowToastAction, SIGNUP_ERROR} from "../actions/globalActions";
 
 @Injectable()
 export class AuthEffectService {
@@ -151,6 +151,11 @@ export class AuthEffectService {
 		.ofType(SIGN_OUT_ACTION)
 		.switchMap(action => this.authService.logout())
 		.map(res => new SignedOutAction());
+
+	// An effect to handling signing out of the website.
+	@Effect({dispatch: false}) setUsername$ = this.actions$
+		.ofType(SET_USERNAME_ACTION)
+		.switchMap(action => this.authService.setUsername(action.payload.userKey, action.payload.username, action.payload.fullname));
 
 
 }

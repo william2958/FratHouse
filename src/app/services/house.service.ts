@@ -53,6 +53,45 @@ export class HouseService {
 
 	}
 
+	deleteHouse(house: House) {
+
+		const dataToSave = {};
+
+		dataToSave['houses/' + house.key] = null;
+
+		for (const memberKey in house.members) {
+			dataToSave['housesPerUser/' + memberKey + '/' + house.key] = null;
+		}
+
+		return this.firebaseUpdate(dataToSave);
+
+	}
+
+	addUserToHouse(user: BasicUser, houseKey: string) {
+		const dataToSave = {};
+
+		dataToSave['houses/' + houseKey + '/members/' + user.key] = {
+			name: user.name,
+			username: user.username
+		};
+
+		dataToSave['housesPerUser/' + user.key + '/' + houseKey] = true;
+
+		return this.firebaseUpdate(dataToSave);
+
+	}
+
+	removeUserFromHouse(user: BasicUser, houseKey: string) {
+		const dataToSave = {};
+
+		dataToSave['houses/' + houseKey + '/members/' + user.key] = null;
+
+		dataToSave['housesPerUser/' + user.key + '/' + houseKey] = null;
+
+		return this.firebaseUpdate(dataToSave);
+
+	}
+
 	findUser(nickname: string) {
 		return this.db.list('usernames', {
 			query: {

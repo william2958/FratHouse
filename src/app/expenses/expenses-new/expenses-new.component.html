@@ -1,12 +1,20 @@
-<div *ngIf="house">
-	<h2>Adding expense for {{house.name}}</h2>
+<div *ngIf="house" class="container new-expense">
+	<h3>Adding expense for {{house.name}}</h3>
 
 	<div *ngIf="members && user">
-		<h2>Please choose members to split this expense among.</h2>
 
-		<div class="member" *ngFor="let member of members" (click)="memberSelected(member)">
-			{{member.name}}
-		</div>
+		<ul class="collection with-header">
+			<li class="collection-header"><h4>Select members to split expense.</h4></li>
+			<li *ngFor="let member of members" class="collection-item row">
+				<div class="col input-checkbox">
+					<input type="checkbox" id="{{member.key}}" (change)="selectMember($event, member)"/>
+					<label for="{{member.key}}"> </label>
+				</div>
+				<div class="col member-details">
+					{{member.name}}
+				</div>
+			</li>
+		</ul>
 
 		<div *ngIf="members.length == 0">
 			<h2>No members found for this house</h2>
@@ -14,9 +22,19 @@
 
 		<form (submit)="createExpense()" autocomplete="off" novalidate [formGroup]="newExpenseForm">
 			<div class="row">
-				<div class="input-field col s12">
+				<div class="input-field col s8">
 					<input formControlName="amount" id="amount" type="number">
 					<label for="amount" class="active">Amount</label>
+				</div>
+				<div *ngIf="selectedMembers.length > 0 && newExpenseForm.value.amount" class="col s4 split-amount">
+					Split amount: ${{newExpenseForm.value.amount / selectedMembers.length | number : '1.2-2'}}
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<input formControlName="title" id="title" type="text">
+					<label for="title" class="active">Title</label>
 				</div>
 			</div>
 
@@ -37,9 +55,9 @@
 
 </div>
 
-<div *ngIf="!house">
-	Choose your house:
-	<div *ngFor="let house of houses" (click)="selectHouse(house)">
-		{{house.name}}
+<div *ngIf="!house" class="container pick-house">
+	<h5>Select the group for the expense:</h5>
+	<div class="collection">
+		<a *ngFor="let house of houses" (click)="selectHouse(house)" class="collection-item">{{house.name}}</a>
 	</div>
 </div>

@@ -9,7 +9,11 @@ import {ApplicationState} from "../application-state";
 import {Store} from "@ngrx/store";
 import {ExpenseService} from "../../services/expense.service";
 import {
-	CREATE_NEW_EXPENSE_ACTION, LOAD_OUTSTANDING_EXPENSES_ACTION, LOAD_OWED_EXPENSES_ACTION,
+	CREATE_NEW_EXPENSE_ACTION, CurrentHouseOutstandingExpensesLoadedAction, CurrentHouseOwedExpensesLoadedAction,
+	LOAD_CURRENT_HOUSE_OUTSTANDING_EXPENSES_ACTION,
+	LOAD_CURRENT_HOUSE_OWED_EXPENSES_ACTION,
+	LOAD_OUTSTANDING_EXPENSES_ACTION,
+	LOAD_OWED_EXPENSES_ACTION,
 	LOAD_PAST_OUTSTANDING_EXPENSES_ACTION, LOAD_SINGLE_EXPENSE_ACTION,
 	OutstandingExpensesLoadedAction, OwedExpensesLoadedAction, PastOutstandingExpensesLoadedAction,
 	PastOwedExpensesLoadedAction,
@@ -102,6 +106,36 @@ export class ExpenseEffectService {
 		)
 		.map(expenses => new PastOwedExpensesLoadedAction(expenses));
 
+	@Effect() getCurrentHouseOwedExpenses$ = this.actions$
+		.ofType(LOAD_CURRENT_HOUSE_OWED_EXPENSES_ACTION)
+		.switchMap(action => Observable
+			.from(
+				// Payload is user uid
+				this.expenseService.getCurrentHouseOwedExpenses(action.payload.userKey, action.payload.houseKey)
+			).catch(
+				(err) => {
+					this.store.dispatch(new ShowToastAction([ERROR_TOAST, err.message]));
+					return Observable.empty();
+				}
+			)
+		)
+		.map(expenses => new CurrentHouseOwedExpensesLoadedAction(expenses));
+
+	@Effect() getCurrentHouseOutstandingExpenses$ = this.actions$
+		.ofType(LOAD_CURRENT_HOUSE_OUTSTANDING_EXPENSES_ACTION)
+		.switchMap(action => Observable
+			.from(
+				// Payload is user uid
+				this.expenseService.getCurrentHouseOutstandingExpenses(action.payload.userKey, action.payload.houseKey)
+			).catch(
+				(err) => {
+					this.store.dispatch(new ShowToastAction([ERROR_TOAST, err.message]));
+					return Observable.empty();
+				}
+			)
+		)
+		.map(expenses => new CurrentHouseOutstandingExpensesLoadedAction(expenses));
+
 	@Effect() createNewExpense$ = this.actions$
 		.ofType(CREATE_NEW_EXPENSE_ACTION)
 		.switchMap(action => Observable
@@ -109,7 +143,9 @@ export class ExpenseEffectService {
 				// Payload is user uid
 				this.expenseService.createExpense({
 					amount: action.payload.amount,
+					individualAmount: action.payload.individualAmount,
 					payers: action.payload.payers,
+					title: action.payload.title,
 					reason: action.payload.reason,
 					payeeName: action.payload.payeeName
 				}, action.payload.userKey, action.payload.houseKey)

@@ -11,6 +11,10 @@ export const PAST_OWED_EXPENSES_LOADED_ACTION = 'PAST_OWED_EXPENSES_LOADED_ACTIO
 export const LOAD_SINGLE_EXPENSE_ACTION = 'LOAD_SINGLE_EXPENSE_ACTION';
 export const SINGLE_EXPENSE_LOADED_ACTION = 'SINGLE_EXPENSE_LOADED_ACTION';
 export const CREATE_NEW_EXPENSE_ACTION = 'CREATE_NEW_EXPENSE_ACTION';
+export const LOAD_CURRENT_HOUSE_OWED_EXPENSES_ACTION = 'LOAD_CURRENT_HOUSE_OWED_EXPENSES_ACTION';
+export const CURRENT_HOUSE_OWED_EXPENSES_LOADED_ACTION = 'CURRENT_HOUSE_OWED_EXPENSES_LOADED_ACTION';
+export const LOAD_CURRENT_HOUSE_OUTSTANDING_EXPENSES_ACTION = 'LOAD_CURRENT_HOUSE_OUTSTANDING_EXPENSES_ACTION';
+export const CURRENT_HOUSE_OUTSTANDING_EXPENSES_LOADED_ACTION = 'CURRENT_HOUSE_OUTSTANDING_EXPENSES_LOADED_ACTION';
 
 export class LoadOutstandingExpensesAction implements Action {
 	type = LOAD_OUTSTANDING_EXPENSES_ACTION;
@@ -70,15 +74,43 @@ export class SingleExpenseLoadedAction implements Action {
 	constructor(public payload?: any) { }
 }
 
-export class CreateExpensePayload {
+export interface CreateExpensePayload {
 	userKey: string;
 	payers: BasicUser[];
+	title: string;
 	reason: string;
 	amount: number;
+	individualAmount: number;
 	houseKey: string;
 	payeeName: string;
 }
 export class CreateNewExpenseAction implements Action {
 	type = CREATE_NEW_EXPENSE_ACTION;
 	constructor(public payload?: CreateExpensePayload) { }
+}
+
+export interface LoadCurrentHouseExpensePayload {
+	userKey: string;
+	houseKey: string;
+}
+export class LoadCurrentHouseOwedExpensesAction implements Action {
+	type = LOAD_CURRENT_HOUSE_OWED_EXPENSES_ACTION;
+	// Payload is user key
+	constructor(public payload?: LoadCurrentHouseExpensePayload) { }
+}
+
+export class CurrentHouseOwedExpensesLoadedAction implements Action {
+	type = CURRENT_HOUSE_OWED_EXPENSES_LOADED_ACTION;
+	constructor(public payload?: any) { }
+}
+
+export class LoadCurrentHouseOutstandingExpensesAction implements Action {
+	type = LOAD_CURRENT_HOUSE_OUTSTANDING_EXPENSES_ACTION;
+	// Payload is user key
+	constructor(public payload?: LoadCurrentHouseExpensePayload) { }
+}
+
+export class CurrentHouseOutstandingExpensesLoadedAction implements Action {
+	type = CURRENT_HOUSE_OUTSTANDING_EXPENSES_LOADED_ACTION;
+	constructor(public payload?: any) { }
 }

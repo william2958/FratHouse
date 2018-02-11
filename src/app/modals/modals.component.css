@@ -119,3 +119,16 @@ img {
 	margin-right: 40px;
 	font-size: 12px;
 }
+
+.submit-pin-button {
+	background-color: #263238;
+}
+
+.cancel-pin-button {
+	background-color: #263238;
+}
+
+.pin-button-row {
+	text-align: center;
+	margin-top: 40px;
+}

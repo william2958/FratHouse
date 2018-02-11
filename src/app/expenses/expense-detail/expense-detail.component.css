@@ -1,0 +1,35 @@
+.expense-detail {
+	font-size: 1.1em;
+	overflow: auto;
+	height: 100vh;
+}
+
+.expense-title {
+	text-align: center;
+	margin-bottom: 0;
+}
+
+.expense-owner {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+
+.badge {
+	font-weight: 300;
+	font-size: 0.8rem;
+	color: #fff;
+	background-color: #26a69a;
+	border-radius: 2px;
+}
+
+.username {
+	font-size: 0.8em;
+	color: darkgrey;
+	margin-left: 5px;
+	margin-top: 2px;
+}
+
+.myExpense {
+	margin-top: 20px;
+}

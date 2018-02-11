@@ -12,6 +12,7 @@ import {Subscription} from "rxjs/Subscription";
 import {CreateNewExpenseAction} from "../../store/actions/expenseActions";
 import {ClearErrorAction, CREATE_EXPENSE_ERROR} from "../../store/actions/globalActions";
 import {BasicUser} from "../../shared/models/user";
+import {Router} from "@angular/router";
 
 @Component({
 	selector: 'app-expenses-new',
@@ -37,11 +38,12 @@ export class ExpensesNewComponent implements OnInit {
 	constructor(
 		private store: Store<ApplicationState>,
 	    private fb: FormBuilder,
-	    private expenseService: ExpenseService
+	    private router: Router
 	) {
 		this.newExpenseForm = this.fb.group({
-			amount: ['', Validators.required],
-			reason: ['']
+			title: ['Groceries', Validators.required],
+			amount: ['20', Validators.required],
+			reason: ['milk & cookies']
 		});
 	}
 
@@ -55,9 +57,10 @@ export class ExpensesNewComponent implements OnInit {
 					console.log('house found and set.', houses[0]);
 					this.initHouseAndMembers(houses[0]);
 				} else {
-					// TODO: FIX SO THAT IT DOESN'T AUTOMATICALLY CHOOSE THE FIRST HOUSE
-					console.log('multiple houses found. TODO ADD FUNCTIONALITY');
 					this.houses = houses;
+					// TODO: REMOVE THIS LINEs
+					// this.house = houses[0];
+					this.initHouseAndMembers(houses[0]);
 				}
 			}
 		});
@@ -88,13 +91,18 @@ export class ExpensesNewComponent implements OnInit {
 		}
 	}
 
-	memberSelected(member) {
-		if (_.includes(this.selectedMembers, member.key)) {
-			console.log('already included');
+	selectMember(e, member) {
+
+		if (e.target.checked) {
+			if (_.includes(this.selectedMembers, member.key)) {
+				console.log('already included');
+			} else {
+				this.selectedMembers.push(member);
+			}
 		} else {
-			this.selectedMembers.push(member);
-			console.log('selected members: ', this.selectedMembers);
+			_.remove(this.selectedMembers, member);
 		}
+
 	}
 
 	createExpense() {
@@ -104,18 +112,22 @@ export class ExpensesNewComponent implements OnInit {
 			console.log('creating expense...');
 			if (this.user && this.house) {
 				console.log('creating expense...');
+				const individual_expense = this.newExpenseForm.value.amount / this.selectedMembers.length;
 				_.remove(this.selectedMembers, member => {
 					return member.key === this.user.uid;
 				});
 				this.store.dispatch(new ClearErrorAction(CREATE_EXPENSE_ERROR));
 				this.store.dispatch(new CreateNewExpenseAction({
+					title: this.newExpenseForm.value.title,
 					reason: this.newExpenseForm.value.reason,
 					amount: this.newExpenseForm.value.amount,
+					individualAmount: individual_expense,
 					payers: this.selectedMembers,
 					userKey: this.user.uid,
 					houseKey: this.house.key,
 					payeeName: this.user.first_name + ' ' + this.user.last_name
 				}));
+				this.router.navigate(['/', 'home', 'expenses']);
 			} else {
 				console.error('user key not found');
 			}

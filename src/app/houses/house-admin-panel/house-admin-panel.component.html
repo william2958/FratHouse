@@ -1,0 +1,70 @@
+<div *ngIf="user?.uid === house.admin">
+	<hr>
+	<!-- Admin Control Panel -->
+	<h4>Admin Control Panel</h4>
+
+	<hr>
+
+	<div class="add-member-zone">
+		<h5>Add a member</h5>
+
+		<div *ngIf="searchUsernameErrors" class="error-message">
+			{{searchUsernameErrors}}
+		</div>
+
+		<form (ngSubmit)="searchUsername()" autocomplete="off" novalidate
+			  [formGroup]="usernameSearchForm" class="username-search-form">
+			<div class="input-field">
+				<input formControlName="username" id="username" type="text">
+				<label for="username" class="active">Username</label>
+			</div>
+
+			<button class="btn waves-effect waves-light right" type="submit" name="action">Search
+				<i class="material-icons right">search</i>
+			</button>
+		</form>
+
+		<div *ngIf="searchResults" class="search-results">
+			<h5>Found Users: </h5>
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">{{searchResults.name}}</span>
+					<p>{{searchResults.username}}</p>
+				</div>
+				<div class="card-action right-align">
+					<a id="selectLink" (click)="addUser()">Add User</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="warning-zone">
+		<div class="row control-panel-row">
+			<div class="left-align col s7">
+				<h5>Delete this group</h5>
+				<p>Once you delete a group, there is not going back.</p>
+			</div>
+			<div class="right-align col s5">
+				<a (click)="showDeleteGroupModal()" class="waves-effect waves-light btn red delete-group-button">Delete Group</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div materialize="modal" [materializeParams]="[{dismissible: false, inDuration: 200}]"
+	 [materializeActions]="confirmDeleteActions" class="modal forgot-modal">
+	<div class="modal-header red white-text">
+		<h4 class="modal-title title">Confirm Delete</h4>
+		<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+	</div>
+
+	<div class="content">
+		<p>Are you sure you want to delete this group? This action cannot be reversed.</p>
+	</div>
+
+	<div class="pin-button-row">
+		<button (click)="close()" class="btn btn-primary cancel-pin-button">Cancel</button>
+		<button (click)="deleteGroup()" class="btn btn-primary red">Confirm</button>
+	</div>
+
+</div>

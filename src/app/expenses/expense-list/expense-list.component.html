@@ -1,0 +1,29 @@
+<div class="expense-list">
+	<div class="row tab-row">
+		<ul materialize="tabs" class="tabs fixed">
+			<li class="tab col s6"><a class="active" (click)="list = 'owed'">Owed</a></li>
+			<li class="tab col s6"><a (click)="list = 'outstanding'">Outstanding</a></li>
+		</ul>
+	</div>
+	<div class="scrollable-expense-list">
+		<div *ngIf="owedExpenses && list === 'owed'">
+			<div *ngFor="let expense of owedExpenses" (click)="goToExpense(expense)">
+				<div class="expense">
+					<div>{{expense.title || 'Misc. Expense'}}</div>
+					<div>{{expense.payeeName}}: <span class="red-text">{{expense.individualAmount | currency: 'USD':true}}</span></div>
+					<div>{{expense.reason}}</div>
+					<div class="right-align">{{expense.date_created | date: 'MMM dd, j, y'}}</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="outstandingExpenses && list === 'outstanding'">
+			<div *ngFor="let expense of outstandingExpenses" (click)="goToExpense(expense)">
+				<div class="expense">
+					<div>{{expense.title || 'Misc. Expense'}}: <span class="green-text">{{expense.individualAmount | currency: 'USD':true}}</span></div>
+					<div>{{expense.reason}}</div>
+					<div class="right-align">{{expense.date_created | date: 'MMM dd, j, y'}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
